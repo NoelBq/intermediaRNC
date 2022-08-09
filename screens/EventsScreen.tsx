@@ -32,6 +32,7 @@ const EventsScreen = ({ navigation }: any) => {
 
 
   const events = useSelector((state: any) => state.events)
+  console.log(events)
 
   const fetchData = async () => {
     const response = await loadEventsByOrder(10, offset * LIMIT);

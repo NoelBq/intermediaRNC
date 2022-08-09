@@ -3,8 +3,7 @@ import React, { useState, useEffect } from 'react'
 import ItemList from '../components/characterDetails/ItemList'
 import { Ionicons } from '@expo/vector-icons'
 import { useSelector } from 'react-redux'
-import { loadEventById, loadEventsComics } from '../services/eventsServices'
-import { AxiosError } from 'axios'
+import { Colors } from '../constants/styles'
 import Subtitle from '../components/ui/Subtitle'
 import events from '../store/redux/events'
 
@@ -44,7 +43,7 @@ const DetailCard: React.FC<Props> = ({ item, onPress, style, event }) => {
     function displayListHandler() {
         !displayList ? setDisplayList(true) : setDisplayList(false)
     }
-    
+
     return (
         <>
           
@@ -70,7 +69,7 @@ const DetailCard: React.FC<Props> = ({ item, onPress, style, event }) => {
                                              {new Date(item.start.replace(/ /g,"T")).toDateString()}
                                             </Text>
                                         ) : (
-                                            <Text>No Start Date</Text>
+                                            <Text style={styles.startDate}>No Start Date available</Text>
                                         )
                                         }
                                  
@@ -83,7 +82,9 @@ const DetailCard: React.FC<Props> = ({ item, onPress, style, event }) => {
                             {displayList && (
                                 <>
                                     <Subtitle>Comics to discuss</Subtitle>
-                                    <ItemList data={eventToLoad.comics} />
+                                    {Object.keys(eventToLoad.comics.items).length > 0 ? (
+                                        <ItemList data={eventToLoad.comics} />
+                                    ): (<Text style={styles.templateText}> No commics to discuss available</Text>)}
                                 </>
 
                             )}
@@ -189,6 +190,16 @@ const styles = StyleSheet.create({
     startDate: {
         alignSelf: 'flex-start',
         paddingLeft: 12,
+    },
+    templateText: {
+        fontSize: 12, 
+        fontWeight: 'bold',
+        textAlign: 'center',
+        color:  Colors.primary800,
+        textTransform: 'uppercase',
+        letterSpacing: 3,
+        paddingBottom: 10
+    
     }
 
 })
