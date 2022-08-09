@@ -9,8 +9,8 @@ This project is an APP developed to show the Marvel characters information using
 - Character description (If available)
 
 
-![Marvel APP - IOS](https://user-images.githubusercontent.com/8467311/84600758-0d2fa900-ae52-11ea-86bd-a305892d812e.gif)
-![Marvel APP - Android](https://user-images.githubusercontent.com/8467311/84600745-fb4e0600-ae51-11ea-9ede-6ab86f52c70d.gif)
+![Marvel APP - IOS]()
+![Marvel APP - Android]()
 
 ## Technologies
 - Typescript

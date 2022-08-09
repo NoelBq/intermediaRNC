@@ -63,10 +63,10 @@ const DetailCard: React.FC<Props> = ({ item, onPress, style, event }) => {
                                 />
                                 <View style={styles.metaInfo}>
                                     <View style={styles.textContainer}>
-                                        <Text style={styles.title}>{item.name || item.title}</Text>
+                                        <Text style={styles.title}>{item.title}</Text>
                                         {
                                         (typeof item.start === 'string') ? (
-                                            <Text >
+                                            <Text style={styles.startDate}>
                                              {new Date(item.start.replace(/ /g,"T")).toDateString()}
                                             </Text>
                                         ) : (
@@ -105,7 +105,7 @@ const DetailCard: React.FC<Props> = ({ item, onPress, style, event }) => {
                                         style={styles.coverImage}
                                     />
                                     <View style={styles.metaInfo}>
-                                        <Text style={styles.title}>{item.name || item.title}</Text>
+                                        <Text style={styles.name}>{item.name}</Text>
                                     </View>
 
                                 </View>
@@ -139,7 +139,8 @@ const styles = StyleSheet.create({
     },
 
     textContainer: {
-        alignItems: 'center'
+        alignItems: 'center',
+        alignSelf: 'center'
     },
     pressableItem: {
         elevation: 10
@@ -168,13 +169,26 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     title: {
-        fontSize: 18,
+        fontSize: 20,
         width: 200,
-        padding: 10
+        padding: 10,
+        letterSpacing: 2
+    },
+    name: {
+        fontSize: 25,
+        width: 200,
+        padding: 5,
+        paddingLeft: 10,
+        letterSpacing: 2,
+        textTransform: 'uppercase'
     },
     arrow: {
         fontSize: 35,
         padding: 10
+    }, 
+    startDate: {
+        alignSelf: 'flex-start',
+        paddingLeft: 12,
     }
 
 })
