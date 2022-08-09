@@ -33,38 +33,5 @@ export {
     loadCharacters
 }
 
-// https://gateway.marvel.com:443/v1/public/characters?apikey=
-
-
-
-// export const getAllCharacters = async () => {
-//     const ts = Date.now()
-//     const hash = CryptoJS.MD5(ts + PRIVATE_KEY + PUBLIC_KEY).toString();
-//     let url = `${BASE_URL}/v1/public/characters?ts=${ts}&apikey=${PUBLIC_KEY}&hash=${hash}`
-//     try {
-//       await axios.get(url)
-//     } catch(error) {
-//         console.log(error)
-//     }
-
-    // try {
-    //     const response = await fetch(url);
-    //     const jsonResponse = await response.json();
-    //     return jsonResponse.data;
-    // } catch (e) {
-    //     console.warn(e);
-    // }
-// }
-
-// export const getCharacters = () => {
-//     const ts = Date.now()
-//     const hash = CryptoJS.MD5(ts + PRIVATE_KEY + PUBLIC_KEY).toString();
-//     let url = `${BASE_URL}:443/v1/public/comics?ts=${ts}&apikey=${PUBLIC_KEY}&hash=${hash}`
-//     try {
-//         axios.get(url)
-//     } catch (error) {
-//         console.log(error)
-//     }
-// } 
 
     

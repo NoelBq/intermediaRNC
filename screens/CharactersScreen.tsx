@@ -11,26 +11,27 @@ import uuid from 'react-native-uuid';
 
 
 const CharactersScreen = ({ navigation }:any) => {
+  
   const dispatch = useDispatch()
-  const [ loading, setLoading] = useState(true)
+
+
+
 
   useEffect(() => {
     (async function () {
       try {
         const response = await loadCharacters();
-        // console.log(response.data.data.results);
-        // dispatch({type: PURGE, key: 'characters'});
         dispatch(SET_CHARACTERS(response.data.data.results));
+     
       } catch (error: unknown) {
         if (!(error instanceof AxiosError)) { throw error; }
         console.log(error.message)
       }
-
     })();
   }, [])
 
 
-  function renderCharacter(itemData: { item: { name: string, image: string, id: string, thumbnail:  any } }) {
+  function renderCharacter(itemData: { item: { name: string, image: string, id: string, thumbnail:  any, title: string, start: any }}) {
     function pressHandler() {
 
       navigation.navigate('Character', {
@@ -38,7 +39,7 @@ const CharactersScreen = ({ navigation }:any) => {
         id: itemData.item.id
       })
     }
-    return <DetailCard item={itemData.item} onPress={pressHandler} style={styles.innerWrapper} />
+    return <DetailCard item={itemData.item} onPress={pressHandler} style={styles.innerWrapper} event={false}/>
   }
 
   const characters = useSelector((state:any) => state.characters)

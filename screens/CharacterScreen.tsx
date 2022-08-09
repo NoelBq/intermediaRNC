@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image, ScrollView, ActivityIndicator } from 'react-native'
 import React, { useContext, useLayoutEffect, useState, useEffect } from 'react'
-import CharacterList from '../components/characterDetails/CharacterList';
+import ItemList from '../components/characterDetails/ItemList';
 import Subtitle from '../components/ui/Subtitle'
 import Icon from '../components/ui/Icon'
 import { loadCharacterById } from '../services/charactersService';
@@ -22,16 +22,11 @@ const CharacterScreen = ({ route, navigation }: CharacterProps) => {
   const [loading, setLoading] = useState(true)
 
   const id = route.params.id
-  console.log(id)
-
-  // const detailedMeal = MEALS.find((meal) => meal.id === id)
 
   useEffect(() => {
     (async function () {
       try {
         const response = await loadCharacterById(id);
-        console.log('response.data.data.results')
-        console.log(response.data.data.results[0])
         if (response.data.data.results.length) {
           setCharacter(response.data.data.results[0])
           setLoading(false)
@@ -68,7 +63,6 @@ const CharacterScreen = ({ route, navigation }: CharacterProps) => {
 
   return (
     <>
-      {console.log(character.comics)}
       {!loading ?
         (
           <ScrollView style={styles.wrapper}>
@@ -79,7 +73,7 @@ const CharacterScreen = ({ route, navigation }: CharacterProps) => {
             </View>
             <View>
               <Subtitle>Appears in these comics</Subtitle>
-              <CharacterList data={character.comics}></CharacterList>
+              <ItemList data={character.comics}></ItemList>
             </View>
           </ScrollView>
         ) :

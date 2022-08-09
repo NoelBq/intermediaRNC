@@ -1,19 +1,23 @@
-import { StyleSheet, Text, View, SafeAreaView, FlatList } from 'react-native'
+import { StyleSheet, SafeAreaView, FlatList, TouchableHighlight } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { loadEvents } from '../services/eventsServices'
+import { loadEventsByOrder } from '../services/eventsServices'
 import { AxiosError } from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import DetailCard from '../components/DetailCard'
 import { SET_EVENTS } from '../store/redux/events'
 
+
 const EventsScreen = ({navigation}:any) => {
 
 const dispatch = useDispatch()
 
+  const [offset, setOffset] = useState(0);
+
   useEffect(() => {
     (async function events() {
       try {
-        const response = await loadEvents();
+        const response = await loadEventsByOrder();
+        console.log(response.data);
         dispatch(SET_EVENTS(response.data.data.results));
       } catch (error: unknown) {
         if (!(error instanceof AxiosError)) { throw error; }
@@ -21,32 +25,35 @@ const dispatch = useDispatch()
       }
 
     })();
-    console.log('COMPONENT MOUNTING')
   }, [])
 
- 
+
   const events = useSelector((state:any) => state.events)
-  console.log(events)
 
+  const fetchData = async () => { 
+    const response = await loadEventsByOrder(10, offset);
+    dispatch(SET_EVENTS(response.data.data.results));
+    setOffset(offset + 10);
+  }
 
-  // function renderCharacter(itemData: { item: { name: string, image: string, id: string } }) {
-
-  //   function pressHandler() {
-  //     navigation.navigate('EventDetail')
-  //   }
-  //   return <DetailCard item={itemData.item} onPress={pressHandler} style={styles.innerWrapper} />
-  // }
+  function renderCharacter(itemData: { item: { name: string, image: string, id: string, thumbnail:  any, title: string, start: any}} ) {
+    return <DetailCard item={itemData.item} onPress={()=>{}} style={styles.innerWrapper} event={true} />
+  }
 
 
   return (
-    <Text> testing api call </Text>
-    // <SafeAreaView style={styles.container}>
-    //   <FlatList
-    //     data={USERS}
-    //     keyExtractor={item => item.email}
-    //     renderItem={renderCharacter}
-    //   />
-    // </SafeAreaView>
+  
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={events}
+        renderItem={renderCharacter}
+        keyExtractor={(item, index) => index.toString()}
+        initialNumToRender={25}
+        maxToRenderPerBatch={25}
+        onEndReached={fetchData}
+        onEndReachedThreshold={0.2}
+      />
+    </SafeAreaView>
 
 
   )

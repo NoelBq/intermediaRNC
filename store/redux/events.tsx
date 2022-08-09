@@ -10,10 +10,11 @@ const eventsSlice = createSlice({
             return [...state, ...payload]
         },
         PURGE: (state) => {
-            state = [];
+            return [];
         }
     },
 })
 
 export const SET_EVENTS = eventsSlice.actions.SET_EVENTS
+export const purgeEvents = eventsSlice.actions.PURGE
 export default eventsSlice.reducer

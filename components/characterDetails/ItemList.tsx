@@ -6,9 +6,8 @@ type Props = {
     data: object | any
 }
 
-const CharacterList: React.FC<Props> = ({ data }) => {
-    console.log("THIS IS DATA PROP ITEMS")
-    console.log(data.items)
+const ItemList: React.FC<Props> = ({ data }) => {
+    
     const dataItems = data.items
     return (
         <>
@@ -33,7 +32,7 @@ const CharacterList: React.FC<Props> = ({ data }) => {
     )
 }
 
-export default CharacterList
+export default ItemList
 
 const styles = StyleSheet.create({
     listItem: {

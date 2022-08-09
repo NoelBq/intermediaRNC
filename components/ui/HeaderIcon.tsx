@@ -13,10 +13,20 @@ const HeaderIcon = () => {
 export default HeaderIcon
 
 const styles = StyleSheet.create({
-    iconContainer: {},
-    headerIcon: {
-      fontSize: 30, 
-      color: 'white'
+    iconContainer: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: 20
     },
-    headerText: {}
+    headerIcon: {
+      fontSize: 80, 
+      color: 'white',
+      fontWeight: 'bold'
+    },
+    headerText: {
+      color: 'white', 
+      letterSpacing: 2, 
+      fontWeight: 'bold', 
+      fontSize: 20
+    }
 })
