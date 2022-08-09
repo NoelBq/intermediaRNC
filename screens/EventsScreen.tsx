@@ -5,20 +5,23 @@ import { AxiosError } from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import DetailCard from '../components/DetailCard'
 import { SET_EVENTS } from '../store/redux/events'
+import Spinner from '../components/ui/Spinner'
 
-const LIMIT:number = 15;
+const LIMIT: number = 15;
 
-const EventsScreen = ({navigation}:any) => {
+const EventsScreen = ({ navigation }: any) => {
 
-const dispatch = useDispatch()
+  const dispatch = useDispatch()
 
   const [offset, setOffset] = useState(1);
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     (async function events() {
       try {
         const response = await loadEventsByOrder();
         dispatch(SET_EVENTS(response.data.data.results));
+        setLoading(false)
       } catch (error: unknown) {
         if (!(error instanceof AxiosError)) { throw error; }
         console.log(error.message)
@@ -28,31 +31,38 @@ const dispatch = useDispatch()
   }, [])
 
 
-  const events = useSelector((state:any) => state.events)
+  const events = useSelector((state: any) => state.events)
 
-  const fetchData = async () => { 
+  const fetchData = async () => {
     const response = await loadEventsByOrder(10, offset * LIMIT);
     dispatch(SET_EVENTS(response.data.data.results));
     setOffset(offset + 1);
   }
 
-  function renderCharacter(itemData: { item: { name: string, image: string, id: string, thumbnail:  any, title: string, start: any}} ) {
-    return <DetailCard item={itemData.item} onPress={()=>{}} style={styles.innerWrapper} event={true} />
+  function renderCharacter(itemData: { item: { name: string, image: string, id: string, thumbnail: any, title: string, start: any } }) {
+    return <DetailCard item={itemData.item} onPress={() => { }} style={styles.innerWrapper} event={true} />
   }
 
 
   return (
-  
+
     <SafeAreaView style={styles.container}>
-      <FlatList
-        data={events}
-        renderItem={renderCharacter}
-        keyExtractor={(item, index) => index.toString()}
-        initialNumToRender={25}
-        maxToRenderPerBatch={25}
-        onEndReached={fetchData}
-        onEndReachedThreshold={0.2}
-      />
+
+      {!loading ? (
+        <FlatList
+          data={events}
+          renderItem={renderCharacter}
+          keyExtractor={(item, index) => index.toString()}
+          initialNumToRender={25}
+          maxToRenderPerBatch={25}
+          onEndReached={fetchData}
+          onEndReachedThreshold={0.2}
+        />
+      ) :
+        (
+          <Spinner />
+        )}
+
     </SafeAreaView>
 
 
@@ -67,7 +77,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f8f8f8',
     alignItems: 'center',
     width: '100%'
-  }, 
+  },
   innerWrapper: {
     shadowOffset: { width: 0, height: 1.5 },
     shadowOpacity: 0.25,

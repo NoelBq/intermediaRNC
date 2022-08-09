@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, FlatList, Image } from 'react-native'
+import { StyleSheet, SafeAreaView, FlatList,  } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { loadCharacters } from '../services/charactersService'
 import DetailCard from '../components/DetailCard'
@@ -6,6 +6,7 @@ import { Colors } from '../constants/styles'
 import { AxiosError } from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { SET_CHARACTERS } from '../store/redux/characters'
+import Spinner from '../components/ui/Spinner'
 
 const LIMIT:number = 15;
 
@@ -14,12 +15,14 @@ const CharactersScreen = ({ navigation }:any) => {
   
   const dispatch = useDispatch()
   const [offset, setOffset] = useState(1);
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     (async function () {
       try {
         const response = await loadCharacters();
         dispatch(SET_CHARACTERS(response.data.data.results));
+        setLoading(false)
       } catch (error: unknown) {
         if (!(error instanceof AxiosError)) { throw error; }
         console.log(error.message)
@@ -49,16 +52,21 @@ const CharactersScreen = ({ navigation }:any) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
-        data={characters}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={renderCharacter}
-        initialNumToRender={15}
-        maxToRenderPerBatch={15}
-        onEndReached={fetchData}
-        onEndReachedThreshold={0.2}
-        horizontal={false}
-      />
+      {!loading ? (
+              <FlatList
+              data={characters}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={renderCharacter}
+              initialNumToRender={15}
+              maxToRenderPerBatch={15}
+              onEndReached={fetchData}
+              onEndReachedThreshold={0.2}
+              horizontal={false}
+            />
+      ): (
+        <Spinner/>
+      )}
+
     </SafeAreaView>
 
 

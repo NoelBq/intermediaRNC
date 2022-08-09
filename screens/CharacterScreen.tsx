@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, ScrollView, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, Image, ScrollView } from 'react-native'
 import React, { useContext, useLayoutEffect, useState, useEffect } from 'react'
 import ItemList from '../components/characterDetails/ItemList';
 import Subtitle from '../components/ui/Subtitle'
