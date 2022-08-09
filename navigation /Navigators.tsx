@@ -83,6 +83,7 @@ const Navigation = () => {
             <Stack.Navigator
                 screenOptions={{
                     headerTitle: ()=> <HeaderIcon/>,
+                    headerTitleAlign: 'center',
                     headerStyle: { backgroundColor: Colors.primary500 },
                     headerTintColor: 'white',
                 }}
@@ -107,15 +108,18 @@ const Navigation = () => {
             >
                 <Stack.Screen name="Characters" component={BottomNavigator} options={{
                     headerTitle: 'Marvel Challenge',
+                    headerTitleAlign: 'center',
                     headerStyle: { height: 140, backgroundColor: Colors.primary800,  },
                     headerRight: () => <IconButton  onPress={logOutHandler} icon="exit-outline" color='white' size={24} />
                 }} />
                 <Stack.Screen name="Events" component={EventsScreen} options={{
+                    headerTitleAlign: 'center',
                     headerStyle: { height: 140, backgroundColor: Colors.primary800 },
                     headerRight: () => <IconButton icon="exit-outline" color='white' size={24} />
                 }} />
                 <Stack.Screen name="Character" component={CharacterScreen} options={{
                     headerStyle: { height: 140, backgroundColor: Colors.primary800, borderBottomColor: Colors.primary800 },
+                    headerTitleAlign: 'center',
                     headerTitleStyle: { textTransform: 'uppercase'},
                     headerRight: () => <IconButton icon="exit-outline" color='white' size={24} />
                 }} />    
