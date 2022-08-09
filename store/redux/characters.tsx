@@ -8,7 +8,7 @@ const charactersSlice = createSlice({
     initialState,
     reducers: {
         SET_CHARACTERS: (state, { payload }) => {
-            return [...payload]
+            return [...state, ...payload]
         },
         PURGE: (state) => {
             return [];

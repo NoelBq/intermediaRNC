@@ -6,18 +6,18 @@ import { useDispatch, useSelector } from 'react-redux'
 import DetailCard from '../components/DetailCard'
 import { SET_EVENTS } from '../store/redux/events'
 
+const LIMIT:number = 15;
 
 const EventsScreen = ({navigation}:any) => {
 
 const dispatch = useDispatch()
 
-  const [offset, setOffset] = useState(0);
+  const [offset, setOffset] = useState(1);
 
   useEffect(() => {
     (async function events() {
       try {
         const response = await loadEventsByOrder();
-        console.log(response.data);
         dispatch(SET_EVENTS(response.data.data.results));
       } catch (error: unknown) {
         if (!(error instanceof AxiosError)) { throw error; }
@@ -31,9 +31,9 @@ const dispatch = useDispatch()
   const events = useSelector((state:any) => state.events)
 
   const fetchData = async () => { 
-    const response = await loadEventsByOrder(10, offset);
+    const response = await loadEventsByOrder(10, offset * LIMIT);
     dispatch(SET_EVENTS(response.data.data.results));
-    setOffset(offset + 10);
+    setOffset(offset + 1);
   }
 
   function renderCharacter(itemData: { item: { name: string, image: string, id: string, thumbnail:  any, title: string, start: any}} ) {

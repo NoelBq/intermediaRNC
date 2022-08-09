@@ -7,28 +7,31 @@ import { AxiosError } from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { SET_CHARACTERS } from '../store/redux/characters'
 
-import uuid from 'react-native-uuid';
+const LIMIT:number = 15;
 
 
 const CharactersScreen = ({ navigation }:any) => {
   
   const dispatch = useDispatch()
-
-
-
+  const [offset, setOffset] = useState(1);
 
   useEffect(() => {
     (async function () {
       try {
         const response = await loadCharacters();
         dispatch(SET_CHARACTERS(response.data.data.results));
-     
       } catch (error: unknown) {
         if (!(error instanceof AxiosError)) { throw error; }
         console.log(error.message)
       }
     })();
   }, [])
+
+  const fetchData = async () => { 
+    const response = await loadCharacters(15, offset * LIMIT);
+    dispatch(SET_CHARACTERS(response.data.data.results));
+    setOffset(offset + 1);
+  }
 
 
   function renderCharacter(itemData: { item: { name: string, image: string, id: string, thumbnail:  any, title: string, start: any }}) {
@@ -52,9 +55,9 @@ const CharactersScreen = ({ navigation }:any) => {
         renderItem={renderCharacter}
         initialNumToRender={15}
         maxToRenderPerBatch={15}
-        directionalLockEnabled={true}
+        onEndReached={fetchData}
+        onEndReachedThreshold={0.2}
         horizontal={false}
-        updateCellsBatchingPeriod={20}
       />
     </SafeAreaView>
 
