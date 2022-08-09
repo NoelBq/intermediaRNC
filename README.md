@@ -4,7 +4,7 @@ This project is an APP developed to show the Marvel characters information using
 
 ## Functionalities
 - Sing Up and Login using firebase auth
-- Infinity scrollable characters order by name
+- Infinity scrollable characters 
 - Infinity scrollable events order by date
 - Character description (If available)
 
@@ -30,8 +30,6 @@ This project is an APP developed to show the Marvel characters information using
 
 To run this project, you will need the dependencies bellow:
 
-```
-
 If you are using NPM run:
 
 ```
@@ -47,10 +45,15 @@ If you are using YARN run:
 $ yarn install
 
 $ yarn run
+```
 
 ## Other info
+Test with Sing up:
+Credentials:
 
-### Test with Sing up: 
-#### Creden
+User: test@test.com
+Password : 1234567
+
+ 
 
 
